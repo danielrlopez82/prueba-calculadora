@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Alquimia para Vapeo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #1e1e2f;
+      color: #f0f0f0;
+      max-width: 600px;
+      margin: auto;
+      padding: 2em;
+    }
+    h1 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 1em;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 0.5em;
+      font-size: 1em;
+      margin-top: 0.5em;
+    }
+    button {
+      margin-top: 2em;
+      padding: 1em;
+      width: 100%;
+      font-size: 1em;
+      background-color: #8c52ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #6e40cc;
+    }
+    .results {
+      margin-top: 2em;
+      background-color: #2e2e3f;
+      padding: 1em;
+      border-radius: 8px;
+    }
+    .results p {
+      margin: 0.5em 0;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Calculadora de Vapeo DIY</h1>
+
+<label for="totalMl">Cantidad final (ml):</label>
+<input type="number" id="totalMl" value="100">
+
+<label for="nicotineStrength">Nicotina deseada (mg/ml):</label>
+<input type="number" id="nicotineStrength" value="3">
+
+<label for="baseNicotineStrength">Fuerza base de nicotina (mg/ml):</label>
+<input type="number" id="baseNicotineStrength" value="20">
+
+<label for="aromaPercent">Porcentaje de aroma (%):</label>
+<input type="number" id="aromaPercent" value="10">
+
+<label for="pgPercent">Proporción de PG deseado (%):</label>
+<input type="number" id="pgPercent" value="50">
+
+<label for="vgPercent">Proporción de VG deseado (%):</label>
+<input type="number" id="vgPercent" value="50">
+
+<button onclick="calculate()">Calcular</button>
+
+<div class="results" id="results" style="display:none;">
+  <h2>Resultados</h2>
+  <p><strong>Aroma:</strong> <span id="aromaMl"></span> ml</p>
+  <p><strong>Nicotina base:</strong> <span id="nicBaseMl"></span> ml</p>
+  <p><strong>PG:</strong> <span id="pgMl"></span> ml</p>
+  <p><strong>VG:</strong> <span id="vgMl"></span> ml</p>
+</div>
+
+<script>
+  function calculate() {
+    const totalMl = parseFloat(document.getElementById('totalMl').value);
+    const nicotineStrength = parseFloat(document.getElementById('nicotineStrength').value);
+    const baseNicotineStrength = parseFloat(document.getElementById('baseNicotineStrength').value);
+    const aromaPercent = parseFloat(document.getElementById('aromaPercent').value);
+    const pgPercent = parseFloat(document.getElementById('pgPercent').value);
+    const vgPercent = parseFloat(document.getElementById('vgPercent').value);
+
+    const aromaMl = totalMl * (aromaPercent / 100);
+    const nicBaseMl = (totalMl * nicotineStrength) / baseNicotineStrength;
+    const remainingMl = totalMl - aromaMl - nicBaseMl;
+
+    const pgMl = remainingMl * (pgPercent / 100);
+    const vgMl = remainingMl * (vgPercent / 100);
+
+    document.getElementById('aromaMl').innerText = aromaMl.toFixed(2);
+    document.getElementById('nicBaseMl').innerText = nicBaseMl.toFixed(2);
+    document.getElementById('pgMl').innerText = pgMl.toFixed(2);
+    document.getElementById('vgMl').innerText = vgMl.toFixed(2);
+    document.getElementById('results').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
